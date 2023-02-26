@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import AiProvider, { Provider } from "./Providers";
-import OpenAiProvider from "./Providers/OpenAi";
 import Auth, {AuthProvider} from "./Auth";
 export enum Routes {
     OPENAI = 'openai'
