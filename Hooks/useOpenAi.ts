@@ -13,7 +13,7 @@ const useOpenAi = () => {
         setSuccess(false);
         setErrorMessage("");
         try {
-            const res = await fetch("/api/nextai", {
+            const res = await fetch("/api//nextai/openai", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
