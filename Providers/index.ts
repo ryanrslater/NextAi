@@ -1,5 +1,9 @@
 import OpenAiProvider, { OpenAiConfig } from "./OpenAi";
-import { Routes } from "../index";
+
+export enum Routes {
+    OPENAI = 'openai'
+}
+
 export type Provider = {
     OpenAi?: OpenAiConfig;
 }

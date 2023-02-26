@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import AiProvider, { Provider } from "./Providers";
-import Auth, {AuthProvider} from "./Auth";
-export enum Routes {
-    OPENAI = 'openai'
-}
+import Auth, { AuthProvider } from "./Auth";
 
 
 type AiOptions = {
@@ -25,8 +22,6 @@ const NextAiHandler = async (req: NextApiRequest, res: NextApiResponse, args: Ai
 
     return res.status(201).json({ message: data });
 }
-
-
 
 const NextAi = (...args: [AiOptions]): any => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
