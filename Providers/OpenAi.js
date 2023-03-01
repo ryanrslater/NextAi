@@ -45,6 +45,7 @@ var OpenAiProvider = function (config, body) { return __awaiter(void 0, void 0, 
                 configuration = new openai_1.Configuration({
                     apiKey: config.apiKey,
                 });
+                console.log('Open AI');
                 openai = new openai_1.OpenAIApi(configuration);
                 return [4 /*yield*/, openai.createCompletion({
                         model: body.model ? body.model : "text-davinci-002",
@@ -52,6 +53,7 @@ var OpenAiProvider = function (config, body) { return __awaiter(void 0, void 0, 
                     })];
             case 1:
                 completion = _a.sent();
+                console.log("openai ran", completion);
                 return [2 /*return*/, completion];
         }
     });

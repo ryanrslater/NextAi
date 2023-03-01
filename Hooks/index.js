@@ -38,12 +38,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useOpenAi = void 0;
 var React = require("react");
-var useOpenAi = function () {
+var useOpenAi = function (model) {
     var _a = React.useState(false), success = _a[0], setSuccess = _a[1];
     var _b = React.useState(false), loading = _b[0], setLoading = _b[1];
     var _c = React.useState(false), error = _c[0], setError = _c[1];
     var _d = React.useState(""), errorMessage = _d[0], setErrorMessage = _d[1];
-    var submit = function (body) { return __awaiter(void 0, void 0, void 0, function () {
+    var submit = function (prompt) { return __awaiter(void 0, void 0, void 0, function () {
         var response, res, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -60,7 +60,10 @@ var useOpenAi = function () {
                             headers: {
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify(body),
+                            body: JSON.stringify({
+                                prompt: prompt,
+                                model: model,
+                            }),
                         })];
                 case 2:
                     res = _a.sent();

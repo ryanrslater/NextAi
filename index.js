@@ -58,19 +58,27 @@ var NextAiHandler = function (req, res, args) { return __awaiter(void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!req.query.nextai || !Array.isArray(req.query.nextai))
-                    return [2 /*return*/, res.status(400).json({ message: "Bad Request" })];
+                console.log("initial", req.query.nextai);
+                if (!req.query.nextai || !Array.isArray(req.query.nextai)) {
+                    res.status(400).json({ message: "Bad Request" });
+                    return [2 /*return*/, res];
+                }
+                ;
                 return [4 /*yield*/, (0, Auth_1.default)(args.auth)];
             case 1:
                 userIsAuthenticated = _a.sent();
-                if (!userIsAuthenticated)
-                    return [2 /*return*/, res.status(401).json({ message: "Unauthorized" })];
+                if (!userIsAuthenticated) {
+                    res.status(401).json({ message: "Unauthorized" });
+                    return [2 /*return*/, res];
+                }
+                ;
                 return [4 /*yield*/, (0, Providers_1.default)(args.Providers, req.query.nextai, req.body)];
             case 2:
                 data = _a.sent();
                 if (args.callback)
                     args.callback(req, res);
-                return [2 /*return*/, res.status(201).json({ message: data })];
+                res.status(201).json({ message: data });
+                return [2 /*return*/, res];
         }
     });
 }); };
@@ -79,15 +87,11 @@ var NextAi = function () {
     for (var _i = 0; _i < arguments.length; _i++) {
         args[_i] = arguments[_i];
     }
-    return function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, NextAiHandler(req, res, args[0])];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); };
+    return function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, NextAiHandler(req, res, args[0])];
+            case 1: return [2 /*return*/, _a.sent()];
+        }
+    }); }); };
 };
 exports.default = NextAi;

@@ -1,12 +1,12 @@
 import * as React from 'react'
 
-export const useOpenAi = () => {
+export const useOpenAi = (model: string | null) => {
     const [success, setSuccess] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<boolean>(false);
     const [errorMessage, setErrorMessage] = React.useState<string>("");
 
-    const submit = async (body: any) => {
+    const submit = async (prompt: string) => {
         setLoading(true);
         setError(false);
         setSuccess(false);
@@ -18,7 +18,10 @@ export const useOpenAi = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(body),
+                body: JSON.stringify({
+                    prompt,
+                    model,
+                }),
             });
 
             const data = await res.json();

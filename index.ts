@@ -10,24 +10,31 @@ type AiOptions = {
     callback?: (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 }
 
-const NextAiHandler = async (req: NextApiRequest, res: NextApiResponse, args: AiOptions) => {
-    if (!req.query.nextai || !Array.isArray(req.query.nextai)) return res.status(400).json({ message: "Bad Request" });
+const NextAiHandler = async (req: NextApiRequest, res: NextApiResponse, args: AiOptions): Promise<NextApiResponse> => {
+    console.log("initial", req.query.nextai);
+    if (!req.query.nextai || !Array.isArray(req.query.nextai)) {
+        res.status(400).json({ message: "Bad Request" })
+        return res
+    };
 
     let userIsAuthenticated = await Auth(args.auth);
 
-    if (!userIsAuthenticated) return res.status(401).json({ message: "Unauthorized" });
+    if (!userIsAuthenticated) {
+        res.status(401).json({ message: "Unauthorized" })
+        return res
+    };
 
     const data = await AiProvider(args.Providers, req.query.nextai, req.body);
 
     if (args.callback) args.callback(req, res);
 
-    return res.status(201).json({ message: data });
+    res.status(201).json({ message: data })
+    return res;
 }
 
 const NextAi = (...args: [AiOptions]): any => {
-    return async (req: NextApiRequest, res: NextApiResponse) => {
-        await NextAiHandler(req, res, args[0]);
-    }
+    return async (req: NextApiRequest, res: NextApiResponse) => await NextAiHandler(req, res, args[0]);
+
 }
 
 export default NextAi
