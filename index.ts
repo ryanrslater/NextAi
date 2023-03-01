@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import AiProvider, { Provider } from "./Providers";
 import Auth, { AuthProvider } from "./Auth";
 
+export * from './Hooks'
 
 type AiOptions = {
     Providers: Provider;

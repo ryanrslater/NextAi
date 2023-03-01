@@ -1,10 +1,9 @@
-import React from 'react'
+import * as React from 'react'
 
-const useOpenAi = () => {
+export const useOpenAi = () => {
     const [success, setSuccess] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<boolean>(false);
-    const [response, setResponse] = React.useState<string>("");
     const [errorMessage, setErrorMessage] = React.useState<string>("");
 
     const submit = async (body: any) => {
@@ -12,8 +11,9 @@ const useOpenAi = () => {
         setError(false);
         setSuccess(false);
         setErrorMessage("");
+        let response;
         try {
-            const res = await fetch("/api//nextai/openai", {
+            const res = await fetch("/api/ai/openai", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,7 +23,7 @@ const useOpenAi = () => {
 
             const data = await res.json();
             if (res.ok) {
-                setResponse(data.message);
+                response = data.message;
                 setSuccess(true);
             }
             else {
@@ -41,8 +41,6 @@ const useOpenAi = () => {
         error,
         loading,
         errorMessage,
-        response
     }
 }
 
-export default useOpenAi
