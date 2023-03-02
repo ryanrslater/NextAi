@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
 
 export type OpenAiConfig = {
@@ -5,19 +6,17 @@ export type OpenAiConfig = {
 }
 
 
-const OpenAiProvider = async (config: OpenAiConfig, body: any) => {
+const OpenAiProvider = async (config: OpenAiConfig, req: NextApiRequest, res: NextApiResponse) => {
     const configuration = new Configuration({
         apiKey: config.apiKey,
     });
-    console.log('Open AI')
     const openai = new OpenAIApi(configuration);
 
     const completion = await openai.createCompletion({
-        model: body.model ? body.model : "text-davinci-002",
-        prompt: body.prompt,
+        model: req.body.model ? req.body.model : "text-davinci-002",
+        prompt: req.body.prompt,
     });
-    console.log("openai ran", completion)
-    return completion;
+    res.status(201).json({ message: completion.data.choices[0].text });
 }
 
 export default OpenAiProvider;
