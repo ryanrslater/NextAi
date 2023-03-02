@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var openai_1 = require("openai");
-var OpenAiProvider = function (config, body) { return __awaiter(void 0, void 0, void 0, function () {
+var OpenAiProvider = function (config, req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var configuration, openai, completion;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -45,16 +45,15 @@ var OpenAiProvider = function (config, body) { return __awaiter(void 0, void 0, 
                 configuration = new openai_1.Configuration({
                     apiKey: config.apiKey,
                 });
-                console.log('Open AI');
                 openai = new openai_1.OpenAIApi(configuration);
                 return [4 /*yield*/, openai.createCompletion({
-                        model: body.model ? body.model : "text-davinci-002",
-                        prompt: body.prompt,
+                        model: req.body.model ? req.body.model : "text-davinci-002",
+                        prompt: req.body.prompt,
                     })];
             case 1:
                 completion = _a.sent();
-                console.log("openai ran", completion);
-                return [2 /*return*/, completion];
+                res.status(201).json({ message: completion.data.choices[0].text });
+                return [2 /*return*/];
         }
     });
 }); };

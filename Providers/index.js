@@ -42,19 +42,23 @@ var Routes;
 (function (Routes) {
     Routes["OPENAI"] = "openai";
 })(Routes = exports.Routes || (exports.Routes = {}));
-var AiProvider = function (config, route, body) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
+var AiProvider = function (config, req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!(route[0] === Routes.OPENAI)) return [3 /*break*/, 2];
+                if (!Array.isArray(req.query.nextai)) return [3 /*break*/, 3];
+                if (!(req.query.nextai[0] === Routes.OPENAI)) return [3 /*break*/, 2];
                 if (!config.OpenAi)
                     return [2 /*return*/, { message: "Internal Server Error" }];
-                return [4 /*yield*/, (0, OpenAi_1.default)(config.OpenAi, body)];
+                return [4 /*yield*/, (0, OpenAi_1.default)(config.OpenAi, req, res)];
             case 1:
-                data = _a.sent();
+                _a.sent();
                 _a.label = 2;
-            case 2: return [2 /*return*/, data];
+            case 2: return [3 /*break*/, 4];
+            case 3:
+                res.status(404).json({ message: "Not Found" });
+                _a.label = 4;
+            case 4: return [2 /*return*/];
         }
     });
 }); };
