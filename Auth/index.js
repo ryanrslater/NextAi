@@ -36,23 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Auth = function (auth) { return __awaiter(void 0, void 0, void 0, function () {
+var Auth = function (auth, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, session;
     return __generator(this, function (_a) {
-        if (auth) {
-            if (auth === "Auth0") {
+        switch (_a.label) {
+            case 0:
+                if (!auth) return [3 /*break*/, 5];
+                if (!(auth === "Auth0")) return [3 /*break*/, 1];
                 // Auth0
-                return [2 /*return*/, true];
-            }
-            else if (auth === "NextAuth") {
-                // NextAuth
-                return [2 /*return*/, true];
-            }
-            else
-                throw new Error("Invalid Auth Provider");
+                res.status(401).json({ message: "Unauthorized" });
+                return [3 /*break*/, 5];
+            case 1:
+                if (!(auth === "NextAuth")) return [3 /*break*/, 4];
+                return [4 /*yield*/, fetch("/api/auth/session", {
+                        method: "GET",
+                        credentials: "include",
+                    })];
+            case 2:
+                data = _a.sent();
+                return [4 /*yield*/, data.json()];
+            case 3:
+                session = _a.sent();
+                if (!session.user) {
+                    res.status(401).json({ message: "Unauthorized" });
+                }
+                return [3 /*break*/, 5];
+            case 4: throw new Error("Invalid Auth Provider");
+            case 5: return [2 /*return*/];
         }
-        else
-            return [2 /*return*/, true];
-        return [2 /*return*/];
     });
 }); };
 exports.default = Auth;

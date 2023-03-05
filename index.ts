@@ -10,9 +10,13 @@ type AiOptions = {
     callback?: (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 }
 
+
 const NextAiHandler = async (req: NextApiRequest, res: NextApiResponse, args: AiOptions) => {
-    await AiProvider(args.Providers, req, res);
-    if (args.callback) args.callback(req, res);
+    await Auth(args.auth, res);
+    if (res.statusCode != 401) {
+        await AiProvider(args.Providers, req, res);
+        if (args.callback) args.callback(req, res);
+    }
 }
 
 const NextAi = (...args: [AiOptions]): NextApiHandler => {

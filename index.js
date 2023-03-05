@@ -51,16 +51,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Providers_1 = require("./Providers");
+var Auth_1 = require("./Auth");
 __exportStar(require("./Hooks"), exports);
 var NextAiHandler = function (req, res, args) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, Providers_1.default)(args.Providers, req, res)];
+            case 0: return [4 /*yield*/, (0, Auth_1.default)(args.auth, res)];
             case 1:
+                _a.sent();
+                if (!(res.statusCode != 401)) return [3 /*break*/, 3];
+                return [4 /*yield*/, (0, Providers_1.default)(args.Providers, req, res)];
+            case 2:
                 _a.sent();
                 if (args.callback)
                     args.callback(req, res);
-                return [2 /*return*/];
+                _a.label = 3;
+            case 3: return [2 /*return*/];
         }
     });
 }); };

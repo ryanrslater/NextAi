@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export const useOpenAi = (model: string | null) => {
+export const useOpenAi = (model: string | undefined) => {
     const [success, setSuccess] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<boolean>(false);
