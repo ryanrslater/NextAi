@@ -10,7 +10,7 @@ export enum Routes {
 
 export type Provider = {
     OpenAi?: OpenAiConfig;
-    Rekognition?: AWSConfig;
+    AWS?: AWSConfig;
 }
 
 const AiProvider = async (config: Provider, req: NextApiRequest, res: NextApiResponse) => {
@@ -23,8 +23,8 @@ const AiProvider = async (config: Provider, req: NextApiRequest, res: NextApiRes
             }
         }
         if (req.query.nextai[0] === Routes.REKOGNITION) {
-            if (config.Rekognition) {
-                await RekognitionProvider(config.Rekognition, req, res);
+            if (config.AWS) {
+                await RekognitionProvider(config.AWS, req, res);
             } else {
                 res.status(500).json({ message: "Internal Server Error" })
             }

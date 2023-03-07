@@ -60,8 +60,8 @@ var AiProvider = function (config, req, res) { return __awaiter(void 0, void 0, 
                 _a.label = 3;
             case 3:
                 if (!(req.query.nextai[0] === Routes.REKOGNITION)) return [3 /*break*/, 6];
-                if (!config.Rekognition) return [3 /*break*/, 5];
-                return [4 /*yield*/, (0, Rekognition_1.default)(config.Rekognition, req, res)];
+                if (!config.AWS) return [3 /*break*/, 5];
+                return [4 /*yield*/, (0, Rekognition_1.default)(config.AWS, req, res)];
             case 4:
                 _a.sent();
                 return [3 /*break*/, 6];

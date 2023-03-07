@@ -7,7 +7,7 @@ export declare enum Routes {
 }
 export type Provider = {
     OpenAi?: OpenAiConfig;
-    Rekognition?: AWSConfig;
+    AWS?: AWSConfig;
 };
 declare const AiProvider: (config: Provider, req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 export default AiProvider;
