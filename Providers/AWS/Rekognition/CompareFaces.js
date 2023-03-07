@@ -36,44 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Routes = void 0;
-var OpenAi_1 = require("./OpenAi");
-var Rekognition_1 = require("./AWS/Rekognition");
-var Routes;
-(function (Routes) {
-    Routes["OPENAI"] = "openai";
-    Routes["REKOGNITION"] = "rekognition";
-})(Routes = exports.Routes || (exports.Routes = {}));
-var AiProvider = function (config, req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var client_rekognition_1 = require("@aws-sdk/client-rekognition");
+var CompareFaces = function (client, req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var params, command, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!Array.isArray(req.query.nextai)) return [3 /*break*/, 7];
-                if (!(req.query.nextai[0] === Routes.OPENAI)) return [3 /*break*/, 3];
-                if (!config.OpenAi) return [3 /*break*/, 2];
-                return [4 /*yield*/, (0, OpenAi_1.default)(config.OpenAi, req, res)];
+                params = {
+                    SourceImage: {
+                        S3Object: {
+                            Bucket: req.body.sourceBucket,
+                            Name: req.body.sourceName,
+                        },
+                    },
+                    TargetImage: {
+                        S3Object: {
+                            Bucket: req.body.targetBucket,
+                            Name: req.body.targetName,
+                        },
+                    },
+                    SimilarityThreshold: req.body.similarityThreshold ? req.body.similarityThreshold : 80,
+                };
+                command = new client_rekognition_1.CompareFacesCommand(params);
+                return [4 /*yield*/, client.send(command)];
             case 1:
-                _a.sent();
-                return [3 /*break*/, 3];
-            case 2:
-                res.status(500).json({ message: "Internal Server Error" });
-                _a.label = 3;
-            case 3:
-                if (!(req.query.nextai[0] === Routes.REKOGNITION)) return [3 /*break*/, 6];
-                if (!config.Rekognition) return [3 /*break*/, 5];
-                return [4 /*yield*/, (0, Rekognition_1.default)(config.Rekognition, req, res)];
-            case 4:
-                _a.sent();
-                return [3 /*break*/, 6];
-            case 5:
-                res.status(500).json({ message: "Internal Server Error" });
-                _a.label = 6;
-            case 6: return [3 /*break*/, 8];
-            case 7:
-                res.status(404).json({ message: "Not Found" });
-                _a.label = 8;
-            case 8: return [2 /*return*/];
+                data = _a.sent();
+                res.status(201).json({ message: data.FaceMatches });
+                return [2 /*return*/];
         }
     });
 }); };
-exports.default = AiProvider;
+exports.default = CompareFaces;
